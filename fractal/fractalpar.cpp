@@ -21,25 +21,21 @@ Author: Martin Burtscher
 */
 
 #include <cstdlib>
-#include <cmath>
+#include <math.h>
 #include <mpi.h>
+#include <stdio.h>
 #include <sys/time.h>
 #include "fractal.h"
 
-static const double Delta = 0.001;
-// static const double xMid = 0.23701;
-static const double xMid = 0.23701;
-// static const double yMid = 0.521;
-static const double yMid = 0.524;
+static const double Delta = 1;
+static const double xMid =  0.30001005304301999;
+static const double yMid =  0.0250000000006;
 
 int main(int argc, char *argv[])
 {
-    int my_rank;
+    int my_rank = 0;
     int size;
 
-    // printf("Fractal v1.6 [paralelo]\n");
-
-    // check command line
     if (argc != 3)
     {
         fprintf(stderr, "usage: %s frame_width num_frames\n", argv[0]);
@@ -56,21 +52,6 @@ int main(int argc, char *argv[])
     {
         fprintf(stderr, "error: num_frames must be at least 1\n");
         exit(-1);
-    }
-
-    // allocate picture array
-    unsigned char *pic = new unsigned char[frames * width * width];
-
-    // start time
-    timeval start, end;
-    gettimeofday(&start, NULL);
-
-    // compute frames
-    double *delta = new double[frames];
-    delta[0] = Delta;
-    for (int frame = 1; frame < frames; frame++)
-    {
-        delta[frame] = delta[frame - 1] * 0.98;
     }
 
     MPI_Init(&argc, &argv); /*START MPI */
@@ -106,12 +87,27 @@ int main(int argc, char *argv[])
             end_frame_i += missing_parts;
         }
     }
-    // printf("Processo %d ira processar os frames de %d ate %d com workload de %d \n", my_rank, start_frame_i, end_frame_i, end_frame_i - start_frame_i + 1);
-    for (int frame = start_frame_i; frame <= end_frame_i; frame++)
+
+    int workload = end_frame_i - start_frame_i + 1;
+    int height = width;
+    unsigned char *pic = new unsigned char[workload * width * (width*3)];
+
+    double delta = Delta;
+    for(int frame = 1; frame <= start_frame_i; frame++)
     {
-        const double xMin = xMid - delta[frame];
-        const double yMin = yMid - delta[frame];
-        const double dw = 2.0 * delta[frame] / width;
+        delta*=  0.98;
+    }
+
+    printf("Processo %d ira processar os frames de %d ate %d com workload de %d \n", my_rank, start_frame_i, end_frame_i, end_frame_i - start_frame_i + 1);
+
+    timeval start, end;
+    gettimeofday(&start, NULL);
+
+    for(int frame = 0; frame < workload; frame++)
+    {
+        const double xMin = xMid - delta;
+        const double yMin = yMid - delta;
+        const double dw = 2.0 * delta/ width;
         for (int row = 0; row < width; row++)
         {
             const double cy = yMin + row * dw;
@@ -130,33 +126,33 @@ int main(int argc, char *argv[])
                     x = x2 - y2 + cx;
                     depth--;
                 } while ((depth > 0) && ((x2 + y2) < 5.0));
-                pic[frame * width * width + row * width + col] = (unsigned char)depth;
+                pic[ (frame * height * (width*3)) + (row * (width*3)) + (col*3)+1] = (unsigned char)256-depth;
             }
         }
+        delta = delta*0.98;
     }
-    MPI_Finalize(); /* EXIT MPI */
 
-    if (my_rank == 0)
+    MPI_Finalize();
+
+    if(my_rank == 0)
     {
-        // end time
         gettimeofday(&end, NULL);
         double runtime = end.tv_sec + end.tv_usec / 1000000.0 - start.tv_sec - start.tv_usec / 1000000.0;
-        printf("%d,%d,%d,%.4f\n", size, width, frames, runtime);
+        printf("%d,%d,%d,%.4f\n", size, width, workload, runtime);
     }
 
     //   verify result by writing frames to BMP files
-    if ((width <= 256) && (frames <= 10000))
+    if ((width <= 900000) && (frames <= 10000))
     {
-        for (int frame = start_frame_i; frame <= end_frame_i; frame++)
+        for (int frame = 0; frame < workload; frame++)
         {
             char name[32];
-            sprintf(name, "fractal%d.bmp", frame + 1000);
-            writeBMP(width, width, &pic[frame * width * width], name);
+            sprintf(name, "images2/fractal%d.bmp", frame + 1000 + start_frame_i);
+            generateBitmapImage(&pic[frame * height * (width *3)], width, height, name);
         }
     }
 
     delete[] pic;
-    delete[] delta;
 
     return 0;
 }
