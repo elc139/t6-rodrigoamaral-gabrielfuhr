@@ -132,22 +132,42 @@ int main(int argc, char *argv[])
         delta = delta*0.98;
     }
 
-    MPI_Finalize();
-
-    if(my_rank == 0)
+    if (my_rank == 0)
     {
+        // end time
         gettimeofday(&end, NULL);
         double runtime = end.tv_sec + end.tv_usec / 1000000.0 - start.tv_sec - start.tv_usec / 1000000.0;
-        printf("%d,%d,%d,%.4f\n", size, width, workload, runtime);
+        printf("%d,%d,%d,%.4f\n", size, width, frames, runtime);
+
+        for(int i = 1; i < size; i++)
+        {
+            unsigned char *pic_remote = new unsigned char[workload * width * (width*3)];
+
+            MPI_Status status;
+            MPI_Recv(pic_remote, workload * width * (width*3), MPI_UNSIGNED_CHAR, i, 0, MPI_COMM_WORLD, &status);
+
+            for(int frame = 0; frame < workload; frame++)
+            {
+                char name[32];
+                sprintf(name, "images2/fractal%d.bmp", frame + 10000*(i+1));
+                generateBitmapImage(&pic_remote[frame * height * (width *3)], width, height, name);
+            }
+            delete[] pic_remote;
+        }
     }
+    else
+    {
+        MPI_Send(pic, workload * width * (width*3), MPI_UNSIGNED_CHAR, 0, 0, MPI_COMM_WORLD);
+    }
+    MPI_Finalize(); /* EXIT MPI */
 
     //   verify result by writing frames to BMP files
-    if ((width <= 900000) && (frames <= 10000))
+    if ((width <= 90000) && (frames <= 10000) && my_rank == 0)
     {
-        for (int frame = 0; frame < workload; frame++)
+        for (int frame = start_frame_i; frame <= end_frame_i; frame++)
         {
             char name[32];
-            sprintf(name, "images2/fractal%d.bmp", frame + 1000 + start_frame_i);
+            sprintf(name, "images2/fractal%d.bmp", frame + 10000);
             generateBitmapImage(&pic[frame * height * (width *3)], width, height, name);
         }
     }
