@@ -1,72 +1,12 @@
-Processo 0 ira processar os frames de 0 ate 15 com workload de 16 
-Processo 1 ira processar os frames de 16 ate 31 com workload de 16 
-2,1024,16,22.7215
-Processo 0 ira processar os frames de 0 ate 31 com workload de 32 
-Processo 1 ira processar os frames de 32 ate 63 com workload de 32 
-2,1024,32,50.0898
-Processo 0 ira processar os frames de 0 ate 199 com workload de 200 
-Processo 1 ira processar os frames de 200 ate 399 com workload de 200 
-2,1024,200,424.2676
-Processo 1 ira processar os frames de 11 ate 21 com workload de 11 
-Processo 2 ira processar os frames de 22 ate 31 com workload de 10 
-Processo 0 ira processar os frames de 0 ate 10 com workload de 11 
-3,1024,11,16.6905
-Processo 0 ira processar os frames de 0 ate 21 com workload de 22 
-Processo 1 ira processar os frames de 22 ate 42 com workload de 21 
-Processo 2 ira processar os frames de 43 ate 63 com workload de 21 
-3,1024,22,38.4307
-Processo 1 ira processar os frames de 134 ate 266 com workload de 133 
-Processo 2 ira processar os frames de 267 ate 399 com workload de 133 
-Processo 0 ira processar os frames de 0 ate 133 com workload de 134 
-3,1024,134,310.1459
-Processo 0 ira processar os frames de 0 ate 7 com workload de 8 
-Processo 1 ira processar os frames de 8 ate 15 com workload de 8 
-Processo 2 ira processar os frames de 16 ate 23 com workload de 8 
-Processo 3 ira processar os frames de 24 ate 31 com workload de 8 
-4,1024,8,14.0926
-Processo 2 ira processar os frames de 32 ate 47 com workload de 16 
-Processo 0 ira processar os frames de 0 ate 15 com workload de 16 
-Processo 1 ira processar os frames de 16 ate 31 com workload de 16 
-Processo 3 ira processar os frames de 48 ate 63 com workload de 16 
-4,1024,16,30.4747
-Processo 0 ira processar os frames de 0 ate 99 com workload de 100 
-Processo 1 ira processar os frames de 100 ate 199 com workload de 100 
-Processo 3 ira processar os frames de 300 ate 399 com workload de 100 
-Processo 2 ira processar os frames de 200 ate 299 com workload de 100 
-4,1024,100,170.6280
-Processo 6 ira processar os frames de 24 ate 27 com workload de 4 
-Processo 7 ira processar os frames de 28 ate 31 com workload de 4 
-Processo 0 ira processar os frames de 0 ate 3 com workload de 4 
-Processo 4 ira processar os frames de 16 ate 19 com workload de 4 
-Processo 5 ira processar os frames de 20 ate 23 com workload de 4 
-Processo 2 ira processar os frames de 8 ate 11 com workload de 4 
-Processo 3 ira processar os frames de 12 ate 15 com workload de 4 
-Processo 1 ira processar os frames de 4 ate 7 com workload de 4 
-8,1024,4,5.8392
-Processo 2 ira processar os frames de 16 ate 23 com workload de 8 
-Processo 6 ira processar os frames de 48 ate 55 com workload de 8 
-Processo 3 ira processar os frames de 24 ate 31 com workload de 8 
-Processo 5 ira processar os frames de 40 ate 47 com workload de 8 
-Processo 7 ira processar os frames de 56 ate 63 com workload de 8 
-Processo 0 ira processar os frames de 0 ate 7 com workload de 8 
-Processo 4 ira processar os frames de 32 ate 39 com workload de 8 
-Processo 1 ira processar os frames de 8 ate 15 com workload de 8 
-8,1024,8,13.7155
-Processo 5 ira processar os frames de 250 ate 299 com workload de 50 
-Processo 3 ira processar os frames de 150 ate 199 com workload de 50 
-Processo 7 ira processar os frames de 350 ate 399 com workload de 50 
-Processo 2 ira processar os frames de 100 ate 149 com workload de 50 
-Processo 4 ira processar os frames de 200 ate 249 com workload de 50 
-Processo 1 ira processar os frames de 50 ate 99 com workload de 50 
-Processo 0 ira processar os frames de 0 ate 49 com workload de 50 
-Processo 6 ira processar os frames de 300 ate 349 com workload de 50 
-8,1024,50,110.1897
-Processo 6 ira processar os frames de 300 ate 349 com workload de 50 
-Processo 1 ira processar os frames de 50 ate 99 com workload de 50 
-Processo 0 ira processar os frames de 0 ate 49 com workload de 50 
-Processo 2 ira processar os frames de 100 ate 149 com workload de 50 
-Processo 5 ira processar os frames de 250 ate 299 com workload de 50 
-Processo 4 ira processar os frames de 200 ate 249 com workload de 50 
-Processo 7 ira processar os frames de 350 ate 399 com workload de 50 
-Processo 3 ira processar os frames de 150 ate 199 com workload de 50 
-8,1024,50,146.9934
+2,1024,32,22.7215
+2,1024,64,50.0898
+2,1024,400,424.2676
+3,1024,32,16.6905
+3,1024,64,38.4307
+3,1024,400,310.1459
+4,1024,32,14.0926
+4,1024,64,30.4747
+4,1024,400,170.6280
+8,1024,32,5.8392
+8,1024,64,13.7155
+8,1024,400,110.1897
